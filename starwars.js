@@ -1,6 +1,7 @@
 import { play } from "./music.js";
 import { toRoman } from "./roman.js";
 import { restartAnimation } from "./restart-animation.js";
+import { friendlyFetch } from "./friendly-fetch.js";
 
 const API_ENDPOINT = "https://swapi.info/api";
 
@@ -22,9 +23,8 @@ const ordenaFilmes = (a, b) => a.episode_id - b.episode_id;
 const ul = document.querySelector("#filmes ul");
 const introEl = document.querySelector("pre.introducao");
 
-// busca os filmes e cria os <li>
-fetch(`${API_ENDPOINT}/films`)
-  .then((response) => response.json())
+// busca os filmes (com cache no localStorage) e cria os <li>
+friendlyFetch(`${API_ENDPOINT}/films`)
   .then((data) => {
     // ordena os filmes por número do episódio
     data.sort(ordenaFilmes);
